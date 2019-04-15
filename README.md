@@ -5,15 +5,15 @@ The image reload rate has to be controlled by the user.
 
 ## Why Redux?
 
-Redux is a stylish way to organize the state of the application as well as a desing pattern to follow at developement. React-Redux also allows code re-utilization for mobile development under React Native
+Redux is a stylish way to organize the state of the application in centralized manner. Redux also offers a structure for creating reactive apps, A developer that understands redux will easily find his way in the app. React-Redux also allows code re-utilization for mobile development under React Native
 
 #### Pros: 
 
-Havinging a scaffolding to follow while using react , light weight, Reactive webs site.
+Havinging a scaffolding to follow while using react , light weight, Reactive webs site, Maintainability, Great tools for debuging, Easy testable.
 
 #### Cons: 
 
-Setting up the development enviroment could be challenging and time consumming. Also, many issues may arise during process or installing new npm modules. Thats why I decided to use a boilerplate :
+Setting up the development enviroment could be challenging and time consumming. Also, many issues may arise during process or installing new npm modules. That's why I decided to use a boilerplate :
 
 #### As a starting point I used [www.reactboilerplate.com](https://www.reactboilerplate.com) 
 
