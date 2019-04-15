@@ -19,7 +19,7 @@ const LoadingIndicator = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  top: 20%;
+  top: 50%;
   margin: auto;
   animation: ${ spin} 1s linear infinite;
   `;
