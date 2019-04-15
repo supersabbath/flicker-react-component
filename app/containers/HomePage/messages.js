@@ -14,7 +14,7 @@ export default defineMessages({
   },
   updateTime: {
     id: `${scope}.update.message`,
-    defaultMessage: 'Input you refresh rate',
+    defaultMessage: 'Refresh rate',
   },
   trymeHeader: {
     id: `${scope}.tryme.header`,

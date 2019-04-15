@@ -3,38 +3,64 @@
  * RandomFlickrImage
  *
  */
-
 import React from "react";
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
+import _ from 'lodash'
+// React Components
 import A from '../A';
 import NormalImg from '../Img';
-import _ from 'lodash'
+
 const Img = styled(NormalImg)`
-  width: 100%;
   margin: 0 auto;
+  max-width: none;
   display: block;
+  border-radius: ${props => props.theme.radius};
+  border: 1px solid ${props => props.theme.main};
 `;
+
 /* eslint-disable react/prefer-stateless-function */
 class RandomFlickrImage extends React.PureComponent {
-  
-  componentDidMount() {
-    this.interval = setInterval(() => this.setState({ time: Date.now() }), 5000);
+
+  constructor(props) {
+    super(props)
+    this.launchTimer = this.launchTimer.bind(this)
   }
+  // utils
+  launchTimer() {
+    console.log("refreshig", this.props.refreshRate)
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), (this.props.refreshRate + 1) * 1000);
+  }
+  // React events
+  componentDidMount() {
+    this.launchTimer()
+  }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }
+
+  componentDidUpdate(prevProps) {
+    console.log('prevProps', prevProps)
+    if (prevProps.refreshRate != this.props.refreshRate) {
+      clearInterval(this.interval);
+      this.launchTimer()
+    }
+  }
+  // Render
   render() {
     let imagePath = this.props.src
+    let href = "https://www.linkedin.com/in/fer-canon-16794b89/"
     if (_.isEmpty(this.props.items) == false) {
       let indx = Math.floor(Math.random() * this.props.items.length)
-      let item = _.pullAt(this.props.items,[indx])[0]
-      imagePath =  (item === undefined) ? imagePath : item.media.m
+      let item = _.pullAt(this.props.items, [indx])[0]
+      imagePath = (item === undefined) ? imagePath : item.media.m
+      href = (item === undefined) ? imagePath : item.media.link
     }
     return (
       <div>
-        <A href="https://www.linkedin.com/in/fer-canon-16794b89/">
-          <Img src={imagePath} alt={this.props.alt} />
+        <A href={href} >
+          <Img src={imagePath} alt={href} />
         </A>
       </div>
     );
@@ -43,8 +69,9 @@ class RandomFlickrImage extends React.PureComponent {
 
 RandomFlickrImage.propTypes = {
   src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  alt: PropTypes.string.isRequired,
   className: PropTypes.string,
-  items: PropTypes.array
+  items: PropTypes.any,
+  refreshRate: PropTypes.number.isRequired
 };
+
 export default RandomFlickrImage;

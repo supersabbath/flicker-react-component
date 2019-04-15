@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import GlobalStyle from '../../global-styles';
+import {ThemeProvider} from 'styled-components';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -24,6 +25,7 @@ const AppWrapper = styled.div`
 
 export default function App() {
   return (
+    <ThemeProvider theme={{ main: 'rgb(46, 68, 78)', radius: '3px'}}>
     <AppWrapper>
       <Switch>
         <Route exact path="/" component={HomePage} />
@@ -31,5 +33,6 @@ export default function App() {
       </Switch>
       <GlobalStyle />
     </AppWrapper>
+    </ThemeProvider>
   );
 }

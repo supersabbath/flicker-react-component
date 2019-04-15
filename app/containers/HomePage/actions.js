@@ -1,11 +1,24 @@
-import { LOADING_IMAGE, LOAD_IMAGE_SUCCESS, LOAD_IMAGE_ERROR } from './constants'
+import { LOADING_IMAGE, LOAD_IMAGE_SUCCESS, LOAD_IMAGE_ERROR, UPDATE_REFRESH_RATE } from './constants'
 import flickerRequest from './../../flickr/flickrRequest'
 
-export function startRequest(response) {
+export function updateRate(rate) {
+  return {
+    type: UPDATE_REFRESH_RATE,
+    refreshRate: parseInt(rate),
+  }
+}
+
+export function toggleLoading(isLoading) {
   return {
     type: LOADING_IMAGE,
-    response,
-    items: [],
+    isFetching: isLoading
+  }
+}
+
+function startRequest() {
+  return {
+    type: LOADING_IMAGE,
+    title: 'loading ...',
     isFetching: true
   }
 }
@@ -15,8 +28,7 @@ function requestSuccedded(json) {
     type: LOAD_IMAGE_SUCCESS,
     items: json.items,
     title: json.title,
-    isFetching: false,
-    receivedAt: Date.now()
+    isFetching: false
   }
 }
 
@@ -24,9 +36,7 @@ function requestFailed (error) {
   return {
     type: LOAD_IMAGE_ERROR,
     error: error,
-    items: [],
     isFetching: false,
-    receivedAt: Date.now()
   }
 }
 // posts: json.data.children.map(child => child.data),

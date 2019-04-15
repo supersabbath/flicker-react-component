@@ -8,101 +8,113 @@
  * reloading is not a necessity for you then you can refactor it and remove
  * the linting exception.
  */
-
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import _ from 'lodash'
+// Redux Actions
+import { fetchImage as fetchImageAction, toggleLoading, updateRate } from './actions'
+// Components 
 import RandomFlickrImage from 'components/RandomFlickrImage'
+import H1 from 'components/H1'
+import H2 from 'components/H2'
 import CenteredSection from './CenteredSection'
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import  { fetchImage as fetchImageAction , startRequest }  from './actions'
-// import Image from 'components/Img'
-import Form from './Form';
+import Section from './Section';
 import Input from './Input';
-import Section from './Section'
-const imgpath = 'https://raw.githubusercontent.com/react-boilerplate/react-boilerplate-brand/master/assets/banner-metal-optimized.jpg'
+import Form from './Form';
+import LoadingIndicator from 'components/LoadingIndicator';
+
+const imgpath = 'http://media.gettyimages.com/vectors/hire-me-vector-id504307610?s=170667a&w=1007'
+
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.Component {
+
+  constructor(props) {
+    super(props)
+  }
+
   componentDidMount() {
-    const { dispatch, startFlickRequest } = this.props
-    dispatch(startFlickRequest({}))
+    const { dispatch } = this.props
+    dispatch(fetchImageAction({}))
   }
-  componentDidUpdate(prevProps) {
-    console.log('prevProps',prevProps)
-  }
+
   render() {
     const { items, title, error, isLoading } = this.props;
-    console.log('title',title)
-    console.log(items)
+    const isErrorMessage = _.has(error, 'message')
+    if (_.isUndefined(isLoading) || _.isUndefined(items)) {
+      return (<div> <LoadingIndicator /> </div>)
+    }
     return (
       <div>
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
-      <CenteredSection>
-      <RandomFlickrImage src={ imgpath } alt="Great" items={items} />
-      <Section>
-          <Form onSubmit={this.props.onSubmitForm}>
-            <label htmlFor="Refresh Rate">
-              <FormattedMessage {...messages.trymeHeader} />
-              <Input
-                id="changeRate"
-                type="number"
-                placeholder="secs"
-                min="10" max="60"
-                value={this.props.refreshRate}
-              />
-            </label>
-          </Form>
+        <CenteredSection>
+          <H1>
+            <FormattedMessage {...messages.header} />
+          </H1>
+        </CenteredSection>
+        <CenteredSection>
+          {isLoading && <LoadingIndicator />}
+          <RandomFlickrImage src={imgpath} items={items} refreshRate={this.props.refreshRate} />
+          <Section>
+            <Form onSubmit={this.props.onSubmitForm}>
+              <label style={{ color: 'rgb(46, 68, 78)' }} htmlFor="Refresh Rate">
+                <FormattedMessage {...messages.updateTime} />
+                <Input
+                  id="changeRate"
+                  type="number"
+                  placeholder="10"
+                  min="1" max="20"
+                  value={this.props.refreshRate}
+                  onChange={this.props.onChangeRate}
+                />
+              </label>
+            </Form>
+            <H2>
+              {isErrorMessage ? error.message : title}
+            </H2>
           </Section>
         </CenteredSection>
-        <article>
-          { title }
-        </article>
       </div>
     );
   }
- 
+
 }
-//    onChange={this.props.onChangeRate}
+
 HomePage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onSubmitForm: PropTypes.func,
+  showLoadingIndicator: PropTypes.func,
   refreshRate: PropTypes.number,
   onChangeRate: PropTypes.func,
-  items: PropTypes.array,
+  items: PropTypes.any,
   title: PropTypes.string,
-  // repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
 };
-
+// Redux connections
 export const mapStateToProps = state => {
   if (state.get('flicker') == undefined) {
     return {}
   }
   let fetcherState = state.get('flicker')
-  console.log("state",fetcherState)
   return {
-    isLoading: fetcherState.isFetching,
-    error: fetcherState.error,
-    items: fetcherState.items,
-    title: fetcherState.title
+    isLoading: fetcherState.get('isFetching'),
+    error: fetcherState.get('error'),
+    items: fetcherState.get('items'),
+    title: fetcherState.get('title'),
+    refreshRate: fetcherState.get('rate')
   };
 }
 
-
 const mapDispatchToProps = (dispatch) => {
-  return {  
-    onSubmitForm:  evt => {
+  return {
+    onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-        dispatch(fetchImageAction())
+      dispatch(fetchImageAction())
     },
-    startFlickRequest: startRequest,
+    onChangeRate: evt => dispatch(updateRate(evt.target.value)),
     dispatch
   };
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage)

@@ -12,3 +12,5 @@
 export const LOADING_IMAGE = 'Applicaster/HomePage/LOADING_IMAGE';
 export const LOAD_IMAGE_SUCCESS = 'Applicaster/HomePage/LOAD_IMAGE_SUCCESS';
 export const LOAD_IMAGE_ERROR = 'Applicaster/HomePage/LOAD_IMAGE_ERROR';
+// Refresh related
+export const UPDATE_REFRESH_RATE = 'Applicaster/HomePage/UPDATE_REFRESH_RATE';
