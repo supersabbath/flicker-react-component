@@ -38,7 +38,9 @@ Regaring the boiler plate I decided to remove Saga.js as as it adds more complex
 * app/components
 
 # Usage: 
-
-
-
-
+###### Clone the code
+* `git clone https://github.com/supersabbath/flickr-react-component.git`
+###### Install dependencies
+* `npm install`
+###### Run :
+* `npm start`
