@@ -1,30 +1,44 @@
 # flickr-react-component
 
-# This web app to a React-Redux demo 
+This Repo has React-Redux demo for loading images Asynchronously from Flicker.
+The image reload rate has to be controlled by the user.
 
-# Why Redux?
+## Why Redux?
 
-# Redux is a stylis what to organize the state of the application as well as a desing patter to follow at develepement.
+Redux is a stylish way to organize the state of the application as well as a desing pattern to follow at developement. React-Redux also allows code re-utilization for mobile development under React Native
 
-# React redux also allows code re utilization if developing apps with react native
+#### Pros: 
 
-# Pros is havinging a scafolding to follow while using react 
+Havinging a scaffolding to follow while using react , light weight, Reactive webs site.
 
-# The cons: as any other JS library , framework , is that it has lots of posible configuraiton and could become overwehelming to configure
+#### Cons: 
 
-# thats why I decided to use a boilerplate :
+Setting up the development enviroment could be challenging and time consumming. Also, many issues may arise during process or installing new npm modules. Thats why I decided to use a boilerplate :
 
-# As a starting point I used [www.reactboilerplate.com](https://www.reactboilerplate.com) 
+#### As a starting point I used [www.reactboilerplate.com](https://www.reactboilerplate.com) 
 
-# It offers everything that we need , hot relaoding , redux configuration , some Cli commands, propTypes , styled-component
+It offers everything that we need, hot relaoding, redux configuration, some ClI commands, propTypes, styled-component, localization, SEO using Helmet , and many more
 
-# Regaring the boiler plate I decided to remove Saga.js as as it added more complexity that require for this demo and just use redux-thunk
+Regaring the boiler plate I decided to remove Saga.js as as it adds more complexity than required. For Asych actions I used that standard redux-thunk.
 
-# For css this project uses  [styled-components](https://www.styled-components.com/docs/basics#motivation). Integrates very well with React. See the <ThemeProvider>  and LoadingIndicator
+#### CSS with styled-components 
+ For css this project uses  [styled-components](https://www.styled-components.com/docs/basics#motivation). It integrates very well with React. For instances check how I implemented a loading indicator in /components/LoadingIndicator, Or the use of themes in the entire project: See the <ThemeProvider>
 
-# SEO Helmet
+# Redux Demo important parts: 
 
-#   Redux important parts: Reducers combination :Applicaster/app/reducers.js and app/configureStore.js
+##### Setup:
+* /app/reducers.js 
+* /app/configureStore.js
   
-#  My  /HomePage/reducers.js /HomePage/actions.js
-#
+#### Files and folders to pay attention to:
+* app/containers/App/index.js
+* app/containers/HomePage/index.js 
+* app/containers//HomePage/reducers.js 
+* app/HomePage/actions.js
+* app/components
+
+# Usage: 
+
+
+
+
